@@ -23,8 +23,8 @@ const LoginPage = ({ onLogin }) => {
       </div>
 
       <div id="content">
-        <main className="container" style={{ marginTop: '100px' }}>
-          <form className="card col s12" id="loginForm" method="POST" action="/login" style={{ padding: '1em' }}>
+        <main className="container" style="{% raw %}{{ marginTop: '100px' }}{% endraw %}">
+          <form className="card col s12" id="loginForm" method="POST" action="/login" style="{% raw %}{{ padding: '1em' }}{% endraw %}">
             <div className="row">
               <div className="input-field col s12">
                 <input placeholder="Placeholder" name="username" type="text" className="validate" />
