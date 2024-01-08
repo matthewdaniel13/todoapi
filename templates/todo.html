@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+  <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Todo Page</title>
+
+    <style>
+    div.card{
+        margin:0;
+    }
+
+    #result{
+        margin-top:10px;
+        height: 55vh;
+        overflow-y: scroll;
+    }
+
+    .card{
+        height: 265px;
+        padding-top: 50px;
+    }
+
+      #alert{
+        width: 80vw;
+        height: 50px;
+        padding: 15px;
+        right: 10vw;
+        line-height: 20px;
+        border-radius: 4px;
+        top: 90px;
+        position: absolute;
+        z-index: 10;
+      }
+
+      #close{
+        font-size: 25px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+    </style>
+
+  </head>
+  <body>
+    <div class="navbar-fixed">    
+      <nav class="blue">
+        <div class="nav-wrapper">
+          <a href="#!" class="brand-logo center">{% block page %}{% endblock %}</a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div id="content" >
+        <form name="addForm" class="card" method="POST" action="/createTodo">
+            <div class="card-content">
+              <span class="card-title">Create Todo</span>
+                <div class="input-field">
+                  <input type="text" name="text" placeholder="Enter Todo Text" class="materialize-textarea">
+                  <label for="text">Enter Todo Text</label>
+                </div>
+            </div>
+            <div class="card-actions">
+                <div class="row">
+                  <div class="col sm12 m4 offset-m8">
+                    <input class="btn blue right" type="submit" value="SAVE" />
+                  </div>
+                </div>
+            </div>
+          </form>
+          
+          <main class="container">
+            <ul class="collection " id="result">
+              {% if current_user.is_authenticated %}
+                  {% for todo in todos %}
+                       <li class="collection-item">
+                          <form id="todoForm{{todo.id}}" method="GET" action="toggle/{{todo.id}}" >
+                            <span class="card-title">{{todo.text}}
+                              <label class="right">
+                                <input type="checkbox" name="done" onchange="this.form.submit()" {%  if todo.done %} checked {% endif %} />
+                                <span>Done</span>
+                              </label>
+                            </span>
+                          </form>
+                          <div class="card-action">
+                            <a href="/editTodo/{{todo.id}}">EDIT</a>
+                            <a href="/deleteTodo/{{todo.id}}">DELETE</a>
+                          </div>
+                      </li>
+                  {% endfor %}
+              {% endif %}
+            </ul>
+          </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </body>
+</html>

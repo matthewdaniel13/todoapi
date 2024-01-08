@@ -10,6 +10,11 @@ class User(db.Model):
     password = db.Column(db.String(120), nullable=False)
     todos = db.relationship('Todo', backref='user', lazy=True, cascade="all, delete-orphan")
 
+    def __init__(self, username, email, password):
+      self.username = username
+      self.email = email
+      self.set_password(password)
+
     def toDict(self):
       return {
         "id": self.id,
@@ -22,7 +27,7 @@ class User(db.Model):
     #hashes the password parameter and stores it in the object
     def set_password(self, password):
         """Create hashed password."""
-        self.password = generate_password_hash(password, method='sha256')
+        self.password = generate_password_hash(password)
     
     #Returns true if the parameter is equal to the object's password property
     def check_password(self, password):
@@ -49,6 +54,9 @@ class Todo(db.Model):
   userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) #set userid as a foreign key to user.id 
   done = db.Column(db.Boolean, nullable=False)
 
+  def __init__(self, text):
+    self.text = text
+
   def toDict(self):
    return {
      'id': self.id,
@@ -56,3 +64,11 @@ class Todo(db.Model):
      'userid': self.userid,
      'done': self.done
    }
+
+  def toggle(self):
+    self.done = not self.done
+    db.session.add(self)
+    db.session.commit()
+
+  def __repr__(self):
+    return f'<Todo: {self.id} | {self.user.username} | {self.text} | { "done" if self.done else "not done" }>'
