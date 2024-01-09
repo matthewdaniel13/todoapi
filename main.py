@@ -33,7 +33,7 @@ def get_user(username):
 @app.route('/', methods=['GET'])
 @app.route('/login', methods=['GET'])
 def login_page():
- return render_template('LoginPage.jsx')
+ return render_template('index.jsx')
 
 
 @app.route("/login", methods=["POST"])

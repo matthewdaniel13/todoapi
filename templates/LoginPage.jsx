@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './styles.css'; 
 
 const LoginPage = ({ onLogin }) => {
   const [username, setUsername] = useState('');
@@ -11,20 +10,46 @@ const LoginPage = ({ onLogin }) => {
 
   return (
     <>
+      <style>
+        {`
+          @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+          @import url('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css');
+
+          #alert {
+            width: 80vw;
+            height: 50px;
+            padding: 15px;
+            right: 10vw;
+            line-height: 20px;
+            border-radius: 4px;
+            top: 90px;
+            position: absolute;
+            z-index: 10;
+          }
+
+          #close {
+            font-size: 25px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+          }
+        `}
+      </style>
+
       <div className="navbar-fixed">    
         <nav className="blue">
           <div className="nav-wrapper">
             <a href="#!" className="brand-logo center">Login Page</a>
             <ul id="nav-mobile" className="right">
-              <li><a href="/signup">Signup</a></li>
+              <li><a href="./signup">Signup</a></li>
             </ul>
           </div>
         </nav>
       </div>
 
-      <div id="content">
-        <main className="container" style="{% raw %}{{ marginTop: '100px' }}{% endraw %}">
-          <form className="card col s12" id="loginForm" method="POST" action="/login" style="{% raw %}{{ padding: '1em' }}{% endraw %}">
+      <div id="root">
+      <main className="container">
+          <form className="card col s12" id="loginForm" method="POST" action="/login">
             <div className="row">
               <div className="input-field col s12">
                 <input placeholder="Placeholder" name="username" type="text" className="validate" />
